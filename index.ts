@@ -24,7 +24,11 @@ const parseServer = new ParseServer({
   masterKey: config.masterKey,
   serverURL: config.serverURL,
   allowClientClassCreation: config.allowClientClassCreation,
-  maintenanceKey: config.maintenanceKey,
+  maintenanceKey: config.maintenanceKey,   
+
+  javascriptKey: config.javascriptKey,
+  restAPIKey: config.restAPIKey,
+  clientKey: config.clientKey,
 });
 
 (async () => {
