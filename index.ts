@@ -1,15 +1,23 @@
 import express from "express";
 import cors from "cors";
-const { ParseServer } = require("parse-server");
 import { config } from "./config";
+const { ParseServer } = require("parse-server");
 
 const app = express();
 
+// ✅ Stronger CORS setup for mobile + Parse requests
 app.use(cors({
-  origin: ["*"],
-  credentials: true,
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: [
+    "Content-Type",
+    "X-Parse-Application-Id",
+    "X-Parse-REST-API-Key",
+    "X-Parse-Session-Token",
+  ],
 }));
 
+// ✅ Initialize Parse Server
 const parseServer = new ParseServer({
   databaseURI: config.databaseURI,
   appId: config.appId,
@@ -28,7 +36,7 @@ const parseServer = new ParseServer({
 
     const PORT = process.env.PORT || 1337;
     app.listen(PORT, () => {
-      console.log(`✅ Running at http://localhost:${PORT}/parse`);
+      console.log(`✅ Running at ${config.serverURL}`);
     });
   } catch (err) {
     console.error("❌ Failed to start Parse Server:", err);
